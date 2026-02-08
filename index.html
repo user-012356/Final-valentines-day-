@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Ardhangini ji 💞🎀</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{
+      font-family: 'Poppins', sans-serif;
+      background: radial-gradient(circle at top, #ff9a9e, #fad0c4);
+      overflow:hidden;
+    }
+
+    .page{
+      display:none;
+      height:100vh;
+      width:100vw;
+      justify-content:center;
+      align-items:center;
+      flex-direction:column;
+      text-align:center;
+      padding:30px;
+      animation:fade 1.2s ease;
+    }
+
+    .page.active{display:flex;}
+
+    img{
+      max-width:280px;
+      border-radius:22px;
+      box-shadow:0 15px 35px rgba(0,0,0,0.35);
+      margin-bottom:25px;
+      animation:zoom 1.2s ease;
+    }
+
+    h1{
+      font-size:2.4rem;
+      color:#8b0035;
+      margin-bottom:10px;
+    }
+
+    button{
+      margin-top:35px;
+      padding:14px 36px;
+      border:none;
+      border-radius:30px;
+      font-size:1.1rem;
+      cursor:pointer;
+      background:linear-gradient(45deg,#ff416c,#ff4b2b);
+      color:white;
+      box-shadow:0 10px 25px rgba(0,0,0,0.3);
+      transition:0.3s;
+    }
+
+    button:hover{transform:scale(1.08);}
+
+    @keyframes fade{from{opacity:0;transform:scale(0.9)}to{opacity:1;transform:scale(1)}}
+    @keyframes zoom{from{transform:scale(0.85)}to{transform:scale(1)}}
+
+    /* Floating hearts */
+    .heart{
+      position:absolute;
+      width:20px;
+      height:20px;
+      background:red;
+      transform:rotate(45deg);
+      animation:float 6s linear infinite;
+      opacity:0.6;
+    }
+
+    .heart::before,.heart::after{
+      content:'';
+      width:20px;
+      height:20px;
+      background:red;
+      border-radius:50%;
+      position:absolute;
+    }
+
+    .heart::before{top:-10px;left:0}
+    .heart::after{left:-10px;top:0}
+
+    @keyframes float{from{transform:translateY(100vh) rotate(45deg)}to{transform:translateY(-10vh) rotate(45deg)}}
+
+    canvas{position:fixed;top:0;left:0;pointer-events:none}
+  </style>
+</head>
+<body>
+
+<canvas id="fireworks"></canvas>
+
+<script>
+for(let i=0;i<25;i++){
+  const h=document.createElement('div');
+  h.className='heart';
+  h.style.left=Math.random()*100+'vw';
+  h.style.animationDelay=Math.random()*5+'s';
+  h.style.animationDuration=4+Math.random()*4+'s';
+  document.body.appendChild(h);
+}
+</script>
+
+<div id="pages"></div>
+
+<script>
+const pagesData=[
+ {text:"Welcome to Ardhangini ji 💞🎀",img:"images/1.jpg"},
+ {text:"This story is only about us",img:"images/2.jpg"},
+ {text:"From the first smile",img:"images/3.jpg"},
+ {text:"To the first conversation",img:"images/4.jpg"},
+ {text:"Every moment felt magical",img:"images/5.jpg"},
+ {text:"Your laugh became my favorite sound",img:"images/6.jpg"},
+ {text:"Your presence my peace",img:"images/7.jpg"},
+ {text:"Every day with you feels special",img:"images/8.jpg"},
+ {text:"Even silence feels beautiful",img:"images/9.jpg"},
+ {text:"Because you are there",img:"images/10.jpg"},
+ {text:"Love grew quietly",img:"images/11.jpg"},
+ {text:"But deeply",img:"images/12.jpg"},
+ {text:"Like stars in the night",img:"images/13.jpg"},
+ {text:"Like warmth in winters",img:"images/14.jpg"},
+ {text:"You changed my world",img:"images/15.jpg"},
+ {text:"Without even trying",img:"images/16.jpg"},
+ {text:"You became my habit",img:"images/17.jpg"},
+ {text:"My comfort",img:"images/18.jpg"}
+];
+
+const pagesDiv=document.getElementById('pages');
+
+pagesData.forEach((item,i)=>{
+ const d=document.createElement('div');
+ d.className='page'+(i===0?' active':'');
+ d.innerHTML=`<img src="${item.img}"><h1>${item.text}</h1><button onclick="nextPage()">Next 💗</button>`;
+ pagesDiv.appendChild(d);
+});
+
+const last=document.createElement('div');
+last.className='page';
+last.innerHTML=`<h1>Will you be my forever for a lifetime? 💍💖</h1><button onclick="alert('Forever begins here ❤️')">Yes 💞</button>`;
+pagesDiv.appendChild(last);
+
+let current=0;
+function nextPage(){
+ const pages=document.querySelectorAll('.page');
+ pages[current].classList.remove('active');
+ current++;
+ if(current<pages.length) pages[current].classList.add('active');
+}
+</script>
+
+<script>
+const canvas=document.getElementById('fireworks');
+const ctx=canvas.getContext('2d');
+function resize(){canvas.width=innerWidth;canvas.height=innerHeight}
+resize();onresize=resize;
+let particles=[];
+function blast(x,y){
+ for(let i=0;i<40;i++)particles.push({x,y,vx:Math.cos(i)*Math.random()*3,vy:Math.sin(i)*Math.random()*3,l:80});
+}
+setInterval(()=>blast(Math.random()*canvas.width,Math.random()*canvas.height/2),1200);
+function animate(){
+ ctx.clearRect(0,0,canvas.width,canvas.height);
+ particles.forEach((p,i)=>{
+  ctx.fillStyle=`rgba(255,0,80,${p.l/80})`;
+  ctx.beginPath();ctx.arc(p.x,p.y,3,0,Math.PI*2);ctx.fill();
+  p.x+=p.vx;p.y+=p.vy;p.l--;
+  if(p.l<=0)particles.splice(i,1);
+ });
+ requestAnimationFrame(animate);
+}
+animate();
+</script>
+
+</body>
+</html>
